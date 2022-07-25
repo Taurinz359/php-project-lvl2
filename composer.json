@@ -1,0 +1,22 @@
+{
+    "name": "hexlet/code",
+    "description": "Idn",
+    "autoload": {
+        "psr-4": {
+            "Hexlet\\Code\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Gadel",
+            "email": "gadel.g@myhart.ru"
+        }
+    ],
+    "license": [
+        "LGPL-2.1-only",
+        "GPL-3.0-or-later"
+    ],
+    "require": {
+        "docopt/docopt": "^1.0"
+    }
+}
