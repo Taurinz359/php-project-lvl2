@@ -1,7 +1,11 @@
 {
     "name": "hexlet/code",
     "description": "Idn",
+    "keywords": ["gendiff", "cli", "php", "project", "hexlet"],
     "autoload": {
+        "files": [
+            "src/GenDiff.php"
+        ],
         "psr-4": {
             "Hexlet\\Code\\": "src/"
         }
@@ -18,5 +22,8 @@
     ],
     "require": {
         "docopt/docopt": "^1.0"
-    }
+    },
+    "bin": [
+        "bin/gendiff"
+    ]
 }

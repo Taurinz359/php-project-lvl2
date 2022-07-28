@@ -2,22 +2,39 @@
 
 <?php
 
-$doc = <<<DOC
-Generate diff
+use function Differ\Differ\genDiff;
 
+$autoloadPath1 = __DIR__ . '/../../../autoload.php';
+$autoloadPath2 = __DIR__ . '/../vendor/autoload.php';
+
+if (file_exists($autoloadPath1)) {
+    require_once $autoloadPath1;
+} else {
+    require_once $autoloadPath2;
+}
+
+const DOC = <<<DOC
+gendiff -h
+Generate diff
 Usage:
   gendiff (-h|--help)
   gendiff (-v|--version)
-  gendiff [--format| <fmt>] <firstFile> <secondFile>
-
+  gendiff [--format <fmt>] <firstFilePath> <secondFilePath>
 Options:
-  -h --help                     Show this screen
-  -v --version                  Show version
-  --format <fmt>                Report format [default: stylish]
+  -h --help                    Show this screen
+  -v --version                 Show version
+  --format <fmt>               Report format [default: stylish] Examples: stylish, plain, json
+Report formats:
+    --format <fmt>
+        stylish                Show changes in files marked with symbols "+/-"
+        plain                  Show changes in files explained by the text
+        json                   Show changes in files as a JSON string
 DOC;
 
-require(__DIR__ . '/../vendor/docopt/docopt/src/docopt.php');
-$args = Docopt::handle($doc, array('version' => 'Naval Fate 2.0'));
-foreach ($args as $k => $v) {
-    echo $k . ': ' . json_encode($v) . PHP_EOL;
-}
+$args = \Docopt::handle(DOC, ['version' => '0.1']);
+
+$firstFilePath = $args['<firstFilePath>'];
+$secondFilePath = $args['<secondFilePath>'];
+$format = $args["--format"];
+
+print_r(genDiff($firstFilePath, $secondFilePath, $format));
