@@ -53,6 +53,7 @@ function getDiffString(array $file): string
     $key = $file['key'];
     $firstValue = json_encode($file['firstValue']);
     $secondValue = json_encode($file['secondValue']);
+    //todo : Рещить проблему с вэлью, так-же сделать stan анализ
 
     return match ($valueType) {
         SAME_VALUE => "\t   $key : $firstValue",
