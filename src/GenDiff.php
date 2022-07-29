@@ -11,14 +11,6 @@ const FIRST_VALUE_NOT_EXIST = 3;
 const SECOND_VALUES_NOT_EXIST = 4;
 const ERROR_IN_FUNCTION = 5;
 
-/**
- * @param  string  $firstFile
- * @param  string  $secondFile
- * @param  string  $format
- * @return string
- * @throws Exception
- */
-
 //genDiff(__DIR__ . '/../tests/file1.json', __DIR__ . '/../tests/file2.json', '');
 
 function genDiff(string $firstFile, string $secondFile, string $format): string
@@ -34,17 +26,20 @@ function genDiff(string $firstFile, string $secondFile, string $format): string
     return createDiff($structure);
 }
 
+/**
+ * @param  array<int>  $structure
+ */
+
 function createDiff(array $structure): string
 {
     $structure = array_reduce($structure, function ($acc, $item) {
         $acc[] = getDiffString($item);
         return $acc;
-    },);
+    });
 
     $firstBrace = "{\n";
     $secondBrace = "\n}\n";
-    $result = $firstBrace . implode("\n", $structure) . $secondBrace;
-    return $result;
+    return $firstBrace . implode("\n", $structure) . $secondBrace;
 }
 
 function getDiffString(array $file): string
@@ -53,7 +48,7 @@ function getDiffString(array $file): string
     $key = $file['key'];
     $firstValue = json_encode($file['firstValue']);
     $secondValue = json_encode($file['secondValue']);
-    //todo : Рещить проблему с вэлью, так-же сделать stan анализ
+    //todo : Решить проблему с вэлью, так-же сделать stan анализ
 
     return match ($valueType) {
         SAME_VALUE => "\t   $key : $firstValue",
@@ -63,17 +58,13 @@ function getDiffString(array $file): string
     };
 }
 
-/**
- * @param  string  ...$files
- * @return array|Exception
- * @throws Exception
- */
-function getValidateFileContent(string ...$files): array|Exception
+function getValidateFileContent(string ...$files): array|string
 {
     $content = [];
     foreach ($files as $file) {
         if (!file_exists($file)) {
-            return throw new Exception("File $file don't exist");
+            echo "File $file don't exist";
+            exit();
         }
         $content[] = json_decode(file_get_contents($file), true);
     }
