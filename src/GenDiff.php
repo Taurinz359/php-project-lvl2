@@ -5,6 +5,12 @@ namespace Differ\Differ;
 
 use Exception;
 
+const SAME_VALUE = 1;
+const DIFFERENT_VALUE = 2;
+const FIRST_VALUE_NOT_EXIST = 3;
+const SECOND_VALUES_NOT_EXIST = 4;
+const ERROR_IN_FUNCTION = 5;
+
 /**
  * @param  string  $firstFile
  * @param  string  $secondFile
@@ -13,14 +19,47 @@ use Exception;
  * @throws Exception
  */
 
-genDiff(__DIR__ . '/../tests/file1.json', __DIR__ . '/../tests/file2.json', '');
+//genDiff(__DIR__ . '/../tests/file1.json', __DIR__ . '/../tests/file2.json', '');
 
 function genDiff(string $firstFile, string $secondFile, string $format): string
 {
     [$firstFileContent, $secondFileContent] = getValidateFileContent($firstFile, $secondFile);
     ksort($firstFileContent);
     ksort($secondFileContent);
-    generateStruct($firstFileContent, $secondFileContent);
+
+    $keys = array_merge(array_keys($firstFileContent), array_keys($secondFileContent));
+    $keys = array_values(array_map(null, array_unique($keys)));
+
+    $structure = checkFileKeyValue($keys, $firstFileContent, $secondFileContent);
+    return createDiff($structure);
+}
+
+function createDiff(array $structure): string
+{
+    $structure = array_reduce($structure, function ($acc, $item) {
+        $acc[] = getDiffString($item);
+        return $acc;
+    },);
+
+    $firstBrace = "{\n";
+    $secondBrace = "\n}\n";
+    $result = $firstBrace . implode("\n", $structure) . $secondBrace;
+    return $result;
+}
+
+function getDiffString(array $file): string
+{
+    $valueType = $file['valueType'];
+    $key = $file['key'];
+    $firstValue = json_encode($file['firstValue']);
+    $secondValue = json_encode($file['secondValue']);
+
+    return match ($valueType) {
+        SAME_VALUE => "\t   $key : $firstValue",
+        DIFFERENT_VALUE => "\t - $key : $firstValue\n\t + $key : $secondValue",
+        SECOND_VALUES_NOT_EXIST => "\t - $key : $firstValue",
+        FIRST_VALUE_NOT_EXIST => "\t + $key : $secondValue"
+    };
 }
 
 /**
@@ -40,17 +79,31 @@ function getValidateFileContent(string ...$files): array|Exception
     return $content;
 }
 
-function generateStruct(array $firstFile, array $secondFile): array
+function checkFileKeyValue(array $keys, array $firstFile, array $secondFile): array
 {
-    $struct = array_reduce($firstFile, function ($acc, $item) use ($firstFile, $secondFile) {
-        $key = array_search($item, $firstFile);
-        $acc[] = [
+    return array_map(function ($key) use ($firstFile, $secondFile) {
+        $firstFileValue = array_key_exists($key, $firstFile) ? $firstFile[$key] : null;
+        $secondFileValue = array_key_exists($key, $secondFile) ? $secondFile[$key] : null;
+        return [
             'key' => $key,
-            'firstValue' => array_key_exists($key, $firstFile) ? $item : null,
-            'secondValue' => array_key_exists($key, $secondFile) ? $secondFile[$key] : null,
+            'firstValue' => $firstFileValue,
+            'secondValue' => $secondFileValue,
+            'valueType' => valueIsUnchanged($firstFileValue, $secondFileValue)
         ];
-        return $acc;
-    });
+    }, $keys);
+}
 
-    var_dump($struct);
+function valueIsUnchanged($firstValue, $secondValue): int
+{
+    if ($firstValue === $secondValue) {
+        return SAME_VALUE;
+    } elseif ($firstValue !== null && $secondValue !== null && $firstValue !== $secondValue) {
+        return DIFFERENT_VALUE;
+    } elseif ($firstValue === null) {
+        return FIRST_VALUE_NOT_EXIST;
+    } elseif ($secondValue === null) {
+        return SECOND_VALUES_NOT_EXIST;
+    }
+
+    return ERROR_IN_FUNCTION;
 }
