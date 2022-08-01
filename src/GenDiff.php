@@ -46,15 +46,15 @@ function getDiffString(array $file): string
 {
     $valueType = $file['valueType'];
     $key = $file['key'];
-    $firstValue = json_encode($file['firstValue']);
+    $firstValue = !$file['firstValue'] ? "false" : $file['firstValue'];
     $secondValue = json_encode($file['secondValue']);
     //todo : Решить проблему с вэлью, так-же сделать stan анализ
 
     return match ($valueType) {
-        SAME_VALUE => "\t   $key : $firstValue",
-        DIFFERENT_VALUE => "\t - $key : $firstValue\n\t + $key : $secondValue",
-        SECOND_VALUES_NOT_EXIST => "\t - $key : $firstValue",
-        FIRST_VALUE_NOT_EXIST => "\t + $key : $secondValue"
+        SAME_VALUE => "\t   $key: $firstValue",
+        DIFFERENT_VALUE => "\t - $key: $firstValue\n\t + $key: $secondValue",
+        SECOND_VALUES_NOT_EXIST => "\t - $key: $firstValue",
+        FIRST_VALUE_NOT_EXIST => "\t + $key: $secondValue"
     };
 }
 
