@@ -21,7 +21,8 @@
         "GPL-3.0-or-later"
     ],
     "require": {
-        "docopt/docopt": "^1.0"
+        "docopt/docopt": "^1.0",
+        "phpunit/phpunit": "^9.5"
     },
     "bin": [
         "bin/gendiff"

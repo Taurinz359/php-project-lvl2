@@ -2,9 +2,6 @@
 
 namespace Differ\Differ;
 
-
-use Exception;
-
 const SAME_VALUE = 1;
 const DIFFERENT_VALUE = 2;
 const FIRST_VALUE_NOT_EXIST = 3;
@@ -47,7 +44,7 @@ function getDiffString(array $file): string
     $valueType = $file['valueType'];
     $key = $file['key'];
     $firstValue = !$file['firstValue'] ? "false" : $file['firstValue'];
-    $secondValue = json_encode($file['secondValue']);
+    $secondValue = $file['secondValue'];
     //todo : Решить проблему с вэлью, так-же сделать stan анализ
 
     return match ($valueType) {
@@ -71,6 +68,12 @@ function getValidateFileContent(string ...$files): array|string
     return $content;
 }
 
+/**
+ * @param  array<int, string>  $keys
+ * @param  array<mixed, mixed>  $firstFile
+ * @param  array<mixed, mixed>  $secondFile
+ */
+
 function checkFileKeyValue(array $keys, array $firstFile, array $secondFile): array
 {
     return array_map(function ($key) use ($firstFile, $secondFile) {
@@ -85,7 +88,7 @@ function checkFileKeyValue(array $keys, array $firstFile, array $secondFile): ar
     }, $keys);
 }
 
-function valueIsUnchanged($firstValue, $secondValue): int
+function valueIsUnchanged(mixed $firstValue, mixed $secondValue): int
 {
     if ($firstValue === $secondValue) {
         return SAME_VALUE;
