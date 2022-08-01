@@ -1,7 +1,13 @@
 {
     "name": "hexlet/code",
     "description": "Idn",
-    "keywords": ["gendiff", "cli", "php", "project", "hexlet"],
+    "keywords": [
+        "gendiff",
+        "cli",
+        "php",
+        "project",
+        "hexlet"
+    ],
     "autoload": {
         "files": [
             "src/GenDiff.php"
@@ -26,5 +32,12 @@
     },
     "bin": [
         "bin/gendiff"
-    ]
+    ],
+    "scripts": {
+        "test": [
+            "@clearCache",
+            "phpunit"
+        ],
+        "clearCache": "rm -rf cache/*"
+    }
 }
