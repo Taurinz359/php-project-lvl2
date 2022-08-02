@@ -24,7 +24,7 @@ function genDiff(string $firstFile, string $secondFile, string $format): string
 }
 
 /**
- * @param  array<int>  $structure
+ * @param array<int> $structure
  */
 
 function createDiff(array $structure): string
@@ -35,7 +35,7 @@ function createDiff(array $structure): string
     });
 
     $firstBrace = "{\n";
-    $secondBrace = "\n}\n";
+    $secondBrace = "\n}";
     return $firstBrace . implode("\n", $structure) . $secondBrace;
 }
 
@@ -43,15 +43,14 @@ function getDiffString(array $file): string
 {
     $valueType = $file['valueType'];
     $key = $file['key'];
-    $firstValue = !$file['firstValue'] ? "false" : $file['firstValue'];
-    $secondValue = $file['secondValue'];
-    //todo : Решить проблему с вэлью, так-же сделать stan анализ
+    $firstValue = is_string($file['firstValue']) ? $file['firstValue'] : json_encode($file['firstValue']);
+    $secondValue = is_string($file['secondValue']) ? $file['secondValue'] : json_encode($file['secondValue']);
 
     return match ($valueType) {
-        SAME_VALUE => "\t   $key: $firstValue",
-        DIFFERENT_VALUE => "\t - $key: $firstValue\n\t + $key: $secondValue",
-        SECOND_VALUES_NOT_EXIST => "\t - $key: $firstValue",
-        FIRST_VALUE_NOT_EXIST => "\t + $key: $secondValue"
+        SAME_VALUE => "  $key: $firstValue",
+        DIFFERENT_VALUE => "  - $key: $firstValue\n  + $key: $secondValue",
+        SECOND_VALUES_NOT_EXIST => "  - $key: $firstValue",
+        FIRST_VALUE_NOT_EXIST => "  + $key: $secondValue"
     };
 }
 
@@ -69,9 +68,9 @@ function getValidateFileContent(string ...$files): array|string
 }
 
 /**
- * @param  array<int, string>  $keys
- * @param  array<mixed, mixed>  $firstFile
- * @param  array<mixed, mixed>  $secondFile
+ * @param array<int, string> $keys
+ * @param array<mixed, mixed> $firstFile
+ * @param array<mixed, mixed> $secondFile
  */
 
 function checkFileKeyValue(array $keys, array $firstFile, array $secondFile): array
