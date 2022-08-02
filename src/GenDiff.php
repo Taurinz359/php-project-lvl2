@@ -39,7 +39,7 @@ function createDiff(array $structure): string
     return $firstBrace . implode("\n", $structure) . $secondBrace;
 }
 
-function getDiffString(array $file): string
+function getDiffString(array $file): int
 {
     $valueType = $file['valueType'];
     $key = $file['key'];
