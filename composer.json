@@ -28,7 +28,8 @@
     ],
     "require": {
         "docopt/docopt": "^1.0",
-        "phpunit/phpunit": "^9.5"
+        "phpunit/phpunit": "^9.5",
+        "squizlabs/php_codesniffer": "*"
     },
     "bin": [
         "bin/gendiff"
