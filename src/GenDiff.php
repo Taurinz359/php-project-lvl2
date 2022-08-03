@@ -17,9 +17,9 @@ function genDiff(string $firstFile, string $secondFile, string $format): string
     ksort($secondFileContent);
 
     $keys = array_merge(array_keys($firstFileContent), array_keys($secondFileContent));
-    $keys = array_values(array_map(null, array_unique($keys)));
+    $uniqKeys = array_values(array_map(null, array_unique($keys)));
 
-    $structure = checkFileKeyValue($keys, $firstFileContent, $secondFileContent);
+    $structure = checkFileKeyValue($uniqKeys, $firstFileContent, $secondFileContent);
     return createDiff($structure);
 }
 
@@ -47,7 +47,7 @@ function getDiffString(array $file): string
     $secondValue = is_string($file['secondValue']) ? $file['secondValue'] : json_encode($file['secondValue']);
 
     return match ($valueType) {
-        SAME_VALUE => "  $key: $firstValue",
+        SAME_VALUE => "    $key: $firstValue",
         DIFFERENT_VALUE => "  - $key: $firstValue\n  + $key: $secondValue",
         SECOND_VALUES_NOT_EXIST => "  - $key: $firstValue",
         FIRST_VALUE_NOT_EXIST => "  + $key: $secondValue"
