@@ -11,10 +11,7 @@
     "autoload": {
         "files": [
             "src/GenDiff.php"
-        ],
-        "psr-4": {
-            "Hexlet\\Code\\": "src/"
-        }
+        ]
     },
     "authors": [
         {
@@ -29,7 +26,8 @@
     "require": {
         "docopt/docopt": "^1.0",
         "phpunit/phpunit": "^9.5",
-        "squizlabs/php_codesniffer": "*"
+        "squizlabs/php_codesniffer": "*",
+        "lstrojny/functional-php": "^1.17"
     },
     "bin": [
         "bin/gendiff"

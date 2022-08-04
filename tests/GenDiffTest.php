@@ -8,7 +8,7 @@ use function Differ\Differ\genDiff;
 
 class GenDiffTest extends TestCase
 {
-    private function getFixturesForPlainTest(): array
+    private function getTestFilesAndFormat(): array
     {
         return [
             'json' => [
@@ -17,17 +17,17 @@ class GenDiffTest extends TestCase
                 'expectedStructure' => __DIR__ . '/fixtures/expected.json',
                 'format' => 'json'
             ],
-            'yaml' => [
-                'firstFile' => __DIR__ . '/fixtures/file1.yml',
-                'secondFile' => __DIR__ . '/fixtures/file2.yml',
-                'expectedStructure' => __DIR__ . '/fixtures/expected.yml',
-                'format' => 'yml'
-            ]
+//            'yaml' => [
+//                'firstFile' => __DIR__ . '/fixtures/file1.yml',
+//                'secondFile' => __DIR__ . '/fixtures/file2.yml',
+//                'expectedStructure' => __DIR__ . '/fixtures/expected.yml',
+//                'format' => 'yml'
+//            ]
         ];
     }
 
     /**
-     * @dataProvider  getFixturesForPlainTest
+     * @dataProvider  getTestFilesAndFormat
      */
     public function testAssertSameResult($firstFile, $secondFile, $expectedStructure, $format): void
     {

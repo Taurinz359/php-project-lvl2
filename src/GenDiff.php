@@ -2,21 +2,21 @@
 
 namespace Differ\Differ;
 
+use function Functional\sort as sortFunc;
+
 const SAME_VALUE = 1;
 const DIFFERENT_VALUE = 2;
 const FIRST_VALUE_NOT_EXIST = 3;
 const SECOND_VALUES_NOT_EXIST = 4;
 const ERROR_IN_FUNCTION = 5;
 
-//genDiff(__DIR__ . '/../tests/file1.json', __DIR__ . '/../tests/file2.json', '');
-
 function genDiff(string $firstFile, string $secondFile, string $format): string
 {
     [$firstFileContent, $secondFileContent] = getValidateFileContent($firstFile, $secondFile);
-    ksort($firstFileContent);
-    ksort($secondFileContent);
+    $firstFileSorted = sortFunc($firstFileContent, fn($left, $right) => strcmp($left, $right), true);
+    $secondFileSorted = sortFunc($secondFileContent, fn($left, $right) => strcmp($left, $right), true);
 
-    $keys = array_merge(array_keys($firstFileContent), array_keys($secondFileContent));
+    $keys = array_merge(array_keys($firstFileSorted), array_keys($secondFileSorted));
     $uniqKeys = array_values(array_map(null, array_unique($keys)));
 
     $structure = checkFileKeyValue($uniqKeys, $firstFileContent, $secondFileContent);
