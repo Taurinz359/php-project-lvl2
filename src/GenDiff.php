@@ -2,7 +2,6 @@
 
 namespace Differ\Differ;
 
-use PHPUnit\Util\Exception;
 use function Functional\sort as sortFunc;
 
 const SAME_VALUE = 1;
@@ -11,11 +10,18 @@ const FIRST_VALUE_NOT_EXIST = 3;
 const SECOND_VALUES_NOT_EXIST = 4;
 const ERROR_IN_FUNCTION = 5;
 
+/**
+ * @throws \ErrorException
+ */
 function genDiff(string $firstFile, string $secondFile, string $format): string
 {
     [$firstFileContent, $secondFileContent] = getValidateFileContent($firstFile, $secondFile);
-    $firstFileSorted = sortFunc($firstFileContent, fn($left, $right, $array) => strcmp(array_search($left, $array), array_search($right, $array)), true);
-    $secondFileSorted = sortFunc($secondFileContent, fn($left, $right, $array) => strcmp(array_search($right, $array), array_search($left, $array)), true);
+    $firstFileSorted = sortFunc($firstFileContent, function ($left, $right, $array) {
+        return strcmp(array_search($left, $array), array_search($right, $array));
+    }, true);
+    $secondFileSorted = sortFunc($secondFileContent, function ($left, $right, $array) {
+        return strcmp(array_search($right, $array), array_search($left, $array));
+    }, true);
 
     $keys = array_merge(array_keys($firstFileSorted), array_keys($secondFileSorted));
     $uniqKeys = array_values(array_map(null, array_unique($keys)));
@@ -54,7 +60,7 @@ function getDiffString(array $file): string
     };
 }
 
-function getValidateFileContent(string ...$files): array|string
+function getValidateFileContent(string ...$files): array|\ErrorException
 {
     $content = [];
     foreach ($files as $file) {
