@@ -3,6 +3,7 @@
 namespace Differ\Differ;
 
 use Symfony\Component\Yaml\Yaml;
+
 use function Functional\sort as sortFunc;
 
 const SAME_VALUE = 1;
