@@ -2,6 +2,7 @@
 
 namespace Differ\Differ;
 
+use PHPUnit\Util\Exception;
 use function Functional\sort as sortFunc;
 
 const SAME_VALUE = 1;
@@ -13,13 +14,13 @@ const ERROR_IN_FUNCTION = 5;
 function genDiff(string $firstFile, string $secondFile, string $format): string
 {
     [$firstFileContent, $secondFileContent] = getValidateFileContent($firstFile, $secondFile);
-    $firstFileSorted = sortFunc($firstFileContent, fn($left, $right) => strcmp($left, $right), true);
-    $secondFileSorted = sortFunc($secondFileContent, fn($left, $right) => strcmp($left, $right), true);
+    $firstFileSorted = sortFunc($firstFileContent, fn($left, $right, $array) => strcmp(array_search($left, $array), array_search($right, $array)), true);
+    $secondFileSorted = sortFunc($secondFileContent, fn($left, $right, $array) => strcmp(array_search($right, $array), array_search($left, $array)), true);
 
     $keys = array_merge(array_keys($firstFileSorted), array_keys($secondFileSorted));
     $uniqKeys = array_values(array_map(null, array_unique($keys)));
 
-    $structure = checkFileKeyValue($uniqKeys, $firstFileContent, $secondFileContent);
+    $structure = getStructureByKeys($uniqKeys, $firstFileContent, $secondFileContent);
     return createDiff($structure);
 }
 
@@ -29,10 +30,9 @@ function genDiff(string $firstFile, string $secondFile, string $format): string
 
 function createDiff(array $structure): string
 {
-    $structure = array_reduce($structure, function ($acc, $item) {
-        $acc[] = getDiffString($item);
-        return $acc;
-    });
+    $structure = array_map(function ($item) {
+        return getDiffString((array)$item);
+    }, $structure);
 
     $firstBrace = "{\n";
     $secondBrace = "\n}";
@@ -59,8 +59,7 @@ function getValidateFileContent(string ...$files): array|string
     $content = [];
     foreach ($files as $file) {
         if (!file_exists($file)) {
-            echo "File $file don't exist";
-            exit();
+            throw new \ErrorException("file not found");
         }
         $content[] = json_decode(file_get_contents($file), true);
     }
@@ -73,7 +72,7 @@ function getValidateFileContent(string ...$files): array|string
  * @param array<mixed, mixed> $secondFile
  */
 
-function checkFileKeyValue(array $keys, array $firstFile, array $secondFile): array
+function getStructureByKeys(array $keys, array $firstFile, array $secondFile): array
 {
     return array_map(function ($key) use ($firstFile, $secondFile) {
         $firstFileValue = array_key_exists($key, $firstFile) ? $firstFile[$key] : null;
@@ -82,12 +81,12 @@ function checkFileKeyValue(array $keys, array $firstFile, array $secondFile): ar
             'key' => $key,
             'firstValue' => $firstFileValue,
             'secondValue' => $secondFileValue,
-            'valueType' => valueIsUnchanged($firstFileValue, $secondFileValue)
+            'valueType' => getValueType($firstFileValue, $secondFileValue)
         ];
     }, $keys);
 }
 
-function valueIsUnchanged(mixed $firstValue, mixed $secondValue): int
+function getValueType(mixed $firstValue, mixed $secondValue): int
 {
     if ($firstValue === $secondValue) {
         return SAME_VALUE;
