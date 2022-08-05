@@ -2,6 +2,7 @@
 
 namespace Differ\Differ;
 
+use Symfony\Component\Yaml\Yaml;
 use function Functional\sort as sortFunc;
 
 const SAME_VALUE = 1;
@@ -16,17 +17,19 @@ const ERROR_IN_FUNCTION = 5;
 function genDiff(string $firstFile, string $secondFile, string $format): string
 {
     [$firstFileContent, $secondFileContent] = getValidateFileContent($firstFile, $secondFile);
-    $firstFileSorted = sortFunc($firstFileContent, function ($left, $right, $array) {
+    [$parsedFirstFile, $parsedSecondFile] = getFileDecode($firstFileContent, $secondFileContent, $format);
+
+    $firstFileSorted = sortFunc($parsedFirstFile, function ($left, $right, $array) {
         return strcmp(array_search($left, $array), array_search($right, $array));
     }, true);
-    $secondFileSorted = sortFunc($secondFileContent, function ($left, $right, $array) {
+    $secondFileSorted = sortFunc($parsedSecondFile, function ($left, $right, $array) {
         return strcmp(array_search($right, $array), array_search($left, $array));
     }, true);
 
     $keys = array_merge(array_keys($firstFileSorted), array_keys($secondFileSorted));
     $uniqKeys = array_values(array_map(null, array_unique($keys)));
 
-    $structure = getStructureByKeys($uniqKeys, $firstFileContent, $secondFileContent);
+    $structure = getStructureByKeys($uniqKeys, $parsedFirstFile, $parsedSecondFile);
     return createDiff($structure);
 }
 
@@ -62,14 +65,26 @@ function getDiffString(array $file): string
 
 function getValidateFileContent(string ...$files): array|\ErrorException
 {
-    $content = [];
-    foreach ($files as $file) {
+    return array_map(function ($file) {
         if (!file_exists($file)) {
             throw new \ErrorException("file not found");
         }
-        $content[] = json_decode(file_get_contents($file), true);
-    }
-    return $content;
+        return file_get_contents($file);
+    }, $files);
+}
+
+function getFileDecode(string $firstFile, string $secondFile, $format): array
+{
+    return match ($format) {
+        "json" => [
+            0 => json_decode($firstFile, true),
+            1 => json_decode($secondFile, true)
+        ],
+        'yml' => [
+            0 => Yaml::parse($firstFile),
+            1 => Yaml::parse($secondFile),
+        ]
+    };
 }
 
 /**

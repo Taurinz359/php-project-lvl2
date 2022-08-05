@@ -17,12 +17,12 @@ class GenDiffTest extends TestCase
                 'expectedStructure' => __DIR__ . '/fixtures/expected.json',
                 'format' => 'json'
             ],
-//            'yaml' => [
-//                'firstFile' => __DIR__ . '/fixtures/file1.yml',
-//                'secondFile' => __DIR__ . '/fixtures/file2.yml',
-//                'expectedStructure' => __DIR__ . '/fixtures/expected.yml',
-//                'format' => 'yml'
-//            ]
+            'yaml' => [
+                'firstFile' => __DIR__ . '/fixtures/file1.yml',
+                'secondFile' => __DIR__ . '/fixtures/file2.yml',
+                'expectedStructure' => __DIR__ . '/fixtures/expected.yml',
+                'format' => 'yml'
+            ]
         ];
     }
 

@@ -27,7 +27,8 @@
         "docopt/docopt": "^1.0",
         "phpunit/phpunit": "^9.5",
         "squizlabs/php_codesniffer": "*",
-        "lstrojny/functional-php": "^1.17"
+        "lstrojny/functional-php": "^1.17",
+        "symfony/yaml": "^6.1"
     },
     "bin": [
         "bin/gendiff"
