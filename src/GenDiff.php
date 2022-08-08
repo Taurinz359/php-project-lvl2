@@ -2,9 +2,8 @@
 
 namespace Differ\Differ;
 
-use Symfony\Component\Yaml\Yaml;
-
 use function Functional\sort as sortFunc;
+use function Gendiff\Parsers\getFileDecode;
 
 const SAME_VALUE = 1;
 const DIFFERENT_VALUE = 2;
@@ -74,19 +73,6 @@ function getValidateFileContent(string ...$files): array|\ErrorException
     }, $files);
 }
 
-function getFileDecode(string $firstFile, string $secondFile, $format): array
-{
-    return match ($format) {
-        "json" => [
-            0 => json_decode($firstFile, true),
-            1 => json_decode($secondFile, true)
-        ],
-        'yml' => [
-            0 => Yaml::parse($firstFile),
-            1 => Yaml::parse($secondFile),
-        ]
-    };
-}
 
 /**
  * @param array<int, string> $keys

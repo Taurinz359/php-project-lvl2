@@ -10,7 +10,8 @@
     ],
     "autoload": {
         "files": [
-            "src/GenDiff.php"
+            "src/GenDiff.php",
+            "src/Parsers.php"
         ]
     },
     "authors": [
