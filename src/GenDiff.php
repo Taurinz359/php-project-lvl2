@@ -2,6 +2,7 @@
 
 namespace Differ\Differ;
 
+use function Functional\compare_object_hash_on;
 use function Functional\sort as sortFunc;
 use function Gendiff\Parsers\getFileDecode;
 
@@ -19,10 +20,11 @@ function genDiff(string $firstFile, string $secondFile, string $format): string
     [$firstFileContent, $secondFileContent] = getValidateFileContent($firstFile, $secondFile);
     [$parsedFirstFile, $parsedSecondFile] = getFileDecode($firstFileContent, $secondFileContent, $format);
 
-    $firstFileSorted = sortFunc($parsedFirstFile, function ($left, $right, $array) {
+    $firstFileSorted = sortFunc((array)$parsedFirstFile, function ($left, $right, $array) {
         return strcmp(array_search($left, $array), array_search($right, $array));
     }, true);
-    $secondFileSorted = sortFunc($parsedSecondFile, function ($left, $right, $array) {
+
+    $secondFileSorted = sortFunc((array)$parsedSecondFile, function ($left, $right, $array) {
         return strcmp(array_search($right, $array), array_search($left, $array));
     }, true);
 
@@ -80,11 +82,12 @@ function getValidateFileContent(string ...$files): array|\ErrorException
  * @param array<mixed, mixed> $secondFile
  */
 
-function getStructureByKeys(array $keys, array $firstFile, array $secondFile): array
+function getStructureByKeys(array $keys, object $firstFile, object $secondFile): array
 {
     return array_map(function ($key) use ($firstFile, $secondFile) {
-        $firstFileValue = array_key_exists($key, $firstFile) ? $firstFile[$key] : null;
-        $secondFileValue = array_key_exists($key, $secondFile) ? $secondFile[$key] : null;
+
+        $firstFileValue = property_exists($firstFile, $key) ? $firstFile->$key : null;
+        $secondFileValue = property_exists($secondFile, $key) ? $secondFile->$key : null;
         return [
             'key' => $key,
             'firstValue' => $firstFileValue,
