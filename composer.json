@@ -34,7 +34,7 @@
     "phpunit/phpunit": "^9.5",
     "squizlabs/php_codesniffer": "*",
     "lstrojny/functional-php": "^1.17",
-    "symfony/yaml": "^6.1"
+    "symfony/yaml": "^5.3"
   },
   "bin": [
     "bin/gendiff"
