@@ -15,13 +15,34 @@ class GenDiffTest extends TestCase
                 'firstFile' => __DIR__ . '/fixtures/file1.json',
                 'secondFile' => __DIR__ . '/fixtures/file2.json',
                 'expectedStructure' => __DIR__ . '/fixtures/expected.json',
-                'format' => 'json'
+                'format' => 'stylish'
             ],
             'yaml' => [
                 'firstFile' => __DIR__ . '/fixtures/file1.yml',
                 'secondFile' => __DIR__ . '/fixtures/file2.yml',
                 'expectedStructure' => __DIR__ . '/fixtures/expected.yml',
-                'format' => 'yml'
+                'format' => 'stylish'
+            ],
+
+            'treeStylish' => [
+                'firstFile' => __DIR__ . '/fixtures/stylishFile1.json',
+                'secondFile' => __DIR__ . '/fixtures/stylishFile2.json',
+                'expectedStructure' => __DIR__ . '/fixtures/stylishExpected',
+                'format' => 'stylish'
+            ],
+
+            'treePlain' => [
+                'firstFile' => __DIR__ . '/fixtures/stylishFile1.json',
+                'secondFile' => __DIR__ . '/fixtures/stylishFile2.json',
+                'expectedStructure' => __DIR__ . '/fixtures/plainExpected',
+                'format' => 'plain'
+            ],
+
+            'treeJson' => [
+                'firstFile' => __DIR__ . '/fixtures/stylishFile1.json',
+                'secondFile' => __DIR__ . '/fixtures/stylishFile2.json',
+                'expectedStructure' => __DIR__ . '/fixtures/jsonExpected',
+                'format' => 'json'
             ]
         ];
     }

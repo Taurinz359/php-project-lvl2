@@ -1,19 +1,17 @@
 <?php
 
-namespace Gendiff\Parsers;
+namespace Differ\Parsers;
 
 use Symfony\Component\Yaml\Yaml;
 
-function getFileDecode(string $firstFile, string $secondFile, $format): array
+/**
+ * @throws \Exception
+ */
+function parser(string $content, string $type): array
 {
-    return match ($format) {
-        "json" => [
-            0 => json_decode($firstFile),
-            1 => json_decode($secondFile)
-        ],
-        'yml' => [
-            0 => Yaml::parse($firstFile, Yaml::PARSE_OBJECT_FOR_MAP),
-            1 => Yaml::parse($secondFile, Yaml::PARSE_OBJECT_FOR_MAP),
-        ]
+    return match ($type) {
+        'json' => json_decode($content, true),
+        'yml', 'yaml' => Yaml::parse($content),
+        default => throw new \Exception('Incorrect type')
     };
 }

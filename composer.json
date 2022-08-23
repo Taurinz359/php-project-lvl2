@@ -1,44 +1,49 @@
 {
-    "name": "hexlet/code",
-    "description": "Idn",
-    "keywords": [
-        "gendiff",
-        "cli",
-        "php",
-        "project",
-        "hexlet"
-    ],
-    "autoload": {
-        "files": [
-            "src/GenDiff.php",
-            "src/Parsers.php"
-        ]
-    },
-    "authors": [
-        {
-            "name": "Gadel",
-            "email": "gadel.g@myhart.ru"
-        }
-    ],
-    "license": [
-        "LGPL-2.1-only",
-        "GPL-3.0-or-later"
-    ],
-    "require": {
-        "docopt/docopt": "^1.0",
-        "phpunit/phpunit": "^9.5",
-        "squizlabs/php_codesniffer": "*",
-        "lstrojny/functional-php": "^1.17",
-        "symfony/yaml": "^6.1"
-    },
-    "bin": [
-        "bin/gendiff"
-    ],
-    "scripts": {
-        "test": [
-            "@clearCache",
-            "phpunit"
-        ],
-        "clearCache": "rm -rf cache/*"
+  "name": "hexlet/code",
+  "description": "Idn",
+  "keywords": [
+    "gendiff",
+    "cli",
+    "php",
+    "project",
+    "hexlet"
+  ],
+  "autoload": {
+    "files": [
+      "src/GenDiff.php",
+      "src/Parsers.php",
+      "src/Diff.php",
+      "src/Formatters/Stylish.php",
+      "src/Formatters/Formatter.php",
+      "src/Formatters/Json.php",
+      "src/Formatters/Plain.php"
+    ]
+  },
+  "authors": [
+    {
+      "name": "Gadel",
+      "email": "gadel.g@myhart.ru"
     }
+  ],
+  "license": [
+    "LGPL-2.1-only",
+    "GPL-3.0-or-later"
+  ],
+  "require": {
+    "docopt/docopt": "^1.0",
+    "phpunit/phpunit": "^9.5",
+    "squizlabs/php_codesniffer": "*",
+    "lstrojny/functional-php": "^1.17",
+    "symfony/yaml": "^6.1"
+  },
+  "bin": [
+    "bin/gendiff"
+  ],
+  "scripts": {
+    "test": [
+      "@clearCache",
+      "phpunit"
+    ],
+    "clearCache": "rm -rf cache/*"
+  }
 }

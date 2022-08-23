@@ -1,0 +1,198 @@
+[
+    {
+        "type": "1",
+        "key": "common",
+        "firstValue": {
+            "setting1": "Value 1",
+            "setting2": 200,
+            "setting3": true,
+            "setting6": {
+                "key": "value",
+                "doge": {
+                    "wow": ""
+                }
+            }
+        },
+        "secondValue": {
+            "follow": false,
+            "setting1": "Value 1",
+            "setting3": null,
+            "setting4": "blah blah",
+            "setting5": {
+                "key5": "value5"
+            },
+            "setting6": {
+                "key": "value",
+                "ops": "vops",
+                "doge": {
+                    "wow": "so much"
+                }
+            }
+        },
+        "children": [
+            {
+                "type": "2",
+                "key": "follow",
+                "firstValue": null,
+                "secondValue": false,
+                "children": []
+            },
+            {
+                "type": "1",
+                "key": "setting1",
+                "firstValue": "Value 1",
+                "secondValue": "Value 1",
+                "children": []
+            },
+            {
+                "type": "3",
+                "key": "setting2",
+                "firstValue": 200,
+                "secondValue": null,
+                "children": []
+            },
+            {
+                "type": "4",
+                "key": "setting3",
+                "firstValue": true,
+                "secondValue": null,
+                "children": []
+            },
+            {
+                "type": "2",
+                "key": "setting4",
+                "firstValue": null,
+                "secondValue": "blah blah",
+                "children": []
+            },
+            {
+                "type": "2",
+                "key": "setting5",
+                "firstValue": null,
+                "secondValue": {
+                    "key5": "value5"
+                },
+                "children": []
+            },
+            {
+                "type": "1",
+                "key": "setting6",
+                "firstValue": {
+                    "key": "value",
+                    "doge": {
+                        "wow": ""
+                    }
+                },
+                "secondValue": {
+                    "key": "value",
+                    "ops": "vops",
+                    "doge": {
+                        "wow": "so much"
+                    }
+                },
+                "children": [
+                    {
+                        "type": "1",
+                        "key": "doge",
+                        "firstValue": {
+                            "wow": ""
+                        },
+                        "secondValue": {
+                            "wow": "so much"
+                        },
+                        "children": [
+                            {
+                                "type": "4",
+                                "key": "wow",
+                                "firstValue": "",
+                                "secondValue": "so much",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "1",
+                        "key": "key",
+                        "firstValue": "value",
+                        "secondValue": "value",
+                        "children": []
+                    },
+                    {
+                        "type": "2",
+                        "key": "ops",
+                        "firstValue": null,
+                        "secondValue": "vops",
+                        "children": []
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "type": "1",
+        "key": "group1",
+        "firstValue": {
+            "baz": "bas",
+            "foo": "bar",
+            "nest": {
+                "key": "value"
+            }
+        },
+        "secondValue": {
+            "foo": "bar",
+            "baz": "bars",
+            "nest": "str"
+        },
+        "children": [
+            {
+                "type": "4",
+                "key": "baz",
+                "firstValue": "bas",
+                "secondValue": "bars",
+                "children": []
+            },
+            {
+                "type": "1",
+                "key": "foo",
+                "firstValue": "bar",
+                "secondValue": "bar",
+                "children": []
+            },
+            {
+                "type": "4",
+                "key": "nest",
+                "firstValue": {
+                    "key": "value"
+                },
+                "secondValue": "str",
+                "children": []
+            }
+        ]
+    },
+    {
+        "type": "3",
+        "key": "group2",
+        "firstValue": {
+            "abc": 12345,
+            "deep": {
+                "id": 45
+            }
+        },
+        "secondValue": null,
+        "children": []
+    },
+    {
+        "type": "2",
+        "key": "group3",
+        "firstValue": null,
+        "secondValue": {
+            "deep": {
+                "id": {
+                    "number": 45
+                }
+            },
+            "fee": 100500
+        },
+        "children": []
+    }
+]
