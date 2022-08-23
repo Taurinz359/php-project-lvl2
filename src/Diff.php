@@ -10,14 +10,14 @@ const DEL_VALUE = 3;
 const UPDATE_VALUE = 4;
 
 /**
- * @param string $type
+ * @param int $type
  * @param string $key
  * @param mixed $firstValue
  * @param mixed $secondValue
  * @param array $children
  * @return array
  */
-function getStructTree(string $type, string $key, mixed $firstValue, mixed $secondValue, array $children = []): array
+function getStructTree(int $type, string $key, mixed $firstValue, mixed $secondValue, array $children = []): array
 {
     return [
         'type' => $type,

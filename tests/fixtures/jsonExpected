@@ -1,6 +1,6 @@
 [
     {
-        "type": "1",
+        "type": 1,
         "key": "common",
         "firstValue": {
             "setting1": "Value 1",
@@ -31,42 +31,42 @@
         },
         "children": [
             {
-                "type": "2",
+                "type": 2,
                 "key": "follow",
                 "firstValue": null,
                 "secondValue": false,
                 "children": []
             },
             {
-                "type": "1",
+                "type": 1,
                 "key": "setting1",
                 "firstValue": "Value 1",
                 "secondValue": "Value 1",
                 "children": []
             },
             {
-                "type": "3",
+                "type": 3,
                 "key": "setting2",
                 "firstValue": 200,
                 "secondValue": null,
                 "children": []
             },
             {
-                "type": "4",
+                "type": 4,
                 "key": "setting3",
                 "firstValue": true,
                 "secondValue": null,
                 "children": []
             },
             {
-                "type": "2",
+                "type": 2,
                 "key": "setting4",
                 "firstValue": null,
                 "secondValue": "blah blah",
                 "children": []
             },
             {
-                "type": "2",
+                "type": 2,
                 "key": "setting5",
                 "firstValue": null,
                 "secondValue": {
@@ -75,7 +75,7 @@
                 "children": []
             },
             {
-                "type": "1",
+                "type": 1,
                 "key": "setting6",
                 "firstValue": {
                     "key": "value",
@@ -92,7 +92,7 @@
                 },
                 "children": [
                     {
-                        "type": "1",
+                        "type": 1,
                         "key": "doge",
                         "firstValue": {
                             "wow": ""
@@ -102,7 +102,7 @@
                         },
                         "children": [
                             {
-                                "type": "4",
+                                "type": 4,
                                 "key": "wow",
                                 "firstValue": "",
                                 "secondValue": "so much",
@@ -111,14 +111,14 @@
                         ]
                     },
                     {
-                        "type": "1",
+                        "type": 1,
                         "key": "key",
                         "firstValue": "value",
                         "secondValue": "value",
                         "children": []
                     },
                     {
-                        "type": "2",
+                        "type": 2,
                         "key": "ops",
                         "firstValue": null,
                         "secondValue": "vops",
@@ -129,7 +129,7 @@
         ]
     },
     {
-        "type": "1",
+        "type": 1,
         "key": "group1",
         "firstValue": {
             "baz": "bas",
@@ -145,21 +145,21 @@
         },
         "children": [
             {
-                "type": "4",
+                "type": 4,
                 "key": "baz",
                 "firstValue": "bas",
                 "secondValue": "bars",
                 "children": []
             },
             {
-                "type": "1",
+                "type": 1,
                 "key": "foo",
                 "firstValue": "bar",
                 "secondValue": "bar",
                 "children": []
             },
             {
-                "type": "4",
+                "type": 4,
                 "key": "nest",
                 "firstValue": {
                     "key": "value"
@@ -170,7 +170,7 @@
         ]
     },
     {
-        "type": "3",
+        "type": 3,
         "key": "group2",
         "firstValue": {
             "abc": 12345,
@@ -182,7 +182,7 @@
         "children": []
     },
     {
-        "type": "2",
+        "type": 2,
         "key": "group3",
         "firstValue": null,
         "secondValue": {
