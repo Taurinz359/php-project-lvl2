@@ -97,16 +97,14 @@ function getFormatDiffTree(array $tree, int $deep = 1): string
         $space = str_repeat(' ', $deep * AFTER_SPACE_LENGTH);
         $beforeSpace = substr_replace($space, getSpace($node), -BEFORE_SPACE_LENGTH);
 
-        $keyTmp = $beforeSpace . getKey($node) . ': ';
+        $key = $beforeSpace . getKey($node) . ': ';
 
         $children = getChildren($node);
         if (count($children) > 0) {
-            return $keyTmp . getFormatDiffTree($children, $deep + 1);
+            return $key . getFormatDiffTree($children, $deep + 1);
         }
 
         $value = valueParser(getValue($node), $deep + 1);
-
-        $key = $value === PHP_EOL ? rtrim($keyTmp, ' ') : $keyTmp;
 
         return $key . $value;
     }, $tree);
