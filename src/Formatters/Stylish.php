@@ -7,12 +7,11 @@ use Differ\Diff;
 use function Differ\Diff\getChildren;
 use function Differ\Diff\getKey;
 
+const AFTER_SPACE_LENGTH = 4;
 const ADD_VALUE = '+ ';
 const DEL_VALUE = '- ';
 const SAME_VALUE = '  ';
 
-const AFTER_SPACE_LENGTH = 4;
-const BEFORE_SPACE_LENGTH = 2;
 
 function getTreeDiff(array $diff): string
 {
@@ -62,9 +61,7 @@ function makeTree(array $data): array
             ];
         }
 
-        $type = Diff\getType($tree);
-
-        return match ($type) {
+        return match (Diff\getType($tree)) {
             Diff\UPDATE_VALUE => [
                 ...$acc,
                 makeTreeStruct(DEL_VALUE, Diff\getKey($tree), Diff\getOldValue($tree)),
@@ -94,8 +91,9 @@ function makeTree(array $data): array
 function getFormatDiffTree(array $tree, int $deep = 1): string
 {
     $struct = array_map(function ($node) use ($deep) {
+        $spaceCount = 2;
         $space = str_repeat(' ', $deep * AFTER_SPACE_LENGTH);
-        $beforeSpace = substr_replace($space, getSpace($node), -BEFORE_SPACE_LENGTH);
+        $beforeSpace = substr_replace($space, getSpace($node), -$spaceCount);
 
         $key = $beforeSpace . getKey($node) . ': ';
 
