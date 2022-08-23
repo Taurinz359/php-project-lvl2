@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Differ\Formatters\Json;
 
 function getDiff(array $tree): string

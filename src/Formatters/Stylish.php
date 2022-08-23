@@ -3,6 +3,7 @@
 namespace Differ\Formatters\Stylish\Formatter;
 
 use Differ\Diff;
+
 use function Differ\Diff\getChildren;
 use function Differ\Diff\getKey;
 
