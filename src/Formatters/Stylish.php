@@ -18,22 +18,22 @@ function getTreeDiff(array $diff): string
 {
     $tree = makeTree($diff);
     $formattedDiff = getFormatDiffTree($tree);
-    return rtrim($formattedDiff, "\n");
+    return rtrim($formattedDiff, PHP_EOL);
 }
 
 function cover(array $content, int $deep = 1): string
 {
-    $start = '{' . "\n";
+    $start = '{' . PHP_EOL;
 
     $endIndent = str_repeat(' ', ($deep - 1) * AFTER_SPACE_LENGTH);
-    $end = $endIndent . '}' . "\n";
+    $end = $endIndent . '}' . PHP_EOL;
 
     return $start . implode('', $content) . $end;
 }
 
 /**
- * @param mixed $value
- * @param int $deep
+ * @param  mixed  $value
+ * @param  int  $deep
  * @return string
  */
 
@@ -48,7 +48,7 @@ function valueParser(mixed $value, int $deep): string
         return cover($content, $deep);
     }
 
-    return is_string($value) ? $value . "\n" : json_encode($value) . "\n";
+    return is_string($value) ? $value . PHP_EOL : json_encode($value) . PHP_EOL;
 }
 
 function makeTree(array $data): array
@@ -106,7 +106,7 @@ function getFormatDiffTree(array $tree, int $deep = 1): string
 
         $value = valueParser(getValue($node), $deep + 1);
 
-        $key = $value === "\n" ? rtrim($keyTmp, ' ') : $keyTmp;
+        $key = $value === PHP_EOL ? rtrim($keyTmp, ' ') : $keyTmp;
 
         return $key . $value;
     }, $tree);
@@ -115,10 +115,10 @@ function getFormatDiffTree(array $tree, int $deep = 1): string
 }
 
 /**
- * @param string $space
- * @param string $key
- * @param mixed $value
- * @param array $children
+ * @param  string  $space
+ * @param  string  $key
+ * @param  mixed  $value
+ * @param  array  $children
  * @return array
  */
 function makeTreeStruct(string $space, string $key, mixed $value, array $children = []): array

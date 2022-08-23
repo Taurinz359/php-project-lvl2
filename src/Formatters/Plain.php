@@ -69,7 +69,7 @@ function getFormattedDiffTree(array $tree): string
         throw new \Exception('Error');
     }, $tree);
 
-    return implode("\n", $content);
+    return implode(PHP_EOL, $content);
 }
 
 /**
